@@ -5,6 +5,7 @@ import './App.css';
 import Home from './Home';
 import Courts from './Courts';
 import NewCourtForm from './NewCourtForm';
+import Reservations from './Reservations';
 
 function App() {
   const [courts, setCourts] = useState([]);
@@ -31,6 +32,12 @@ function App() {
             <Courts courts={courts} addCourt = {handleAddCourt} setCourts = {setCourts}/>
           </Route>
           <Route exact path="/new-court">
+            <NewCourtForm addCourt = {handleAddCourt}/>
+          </Route>
+          <Route exact path="/reservations">
+            <Reservations courts={courts}/>
+          </Route>
+          <Route exact path="/new-reservation">
             <NewCourtForm addCourt = {handleAddCourt}/>
           </Route>
         </Switch>

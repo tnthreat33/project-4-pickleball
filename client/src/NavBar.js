@@ -14,6 +14,9 @@ function NavBar(){
             <li>
               <NavLink to="/courts">Courts</NavLink>
             </li>
+            <l1>
+                <NavLink to="/reservations">Reservations</NavLink>
+            </l1>
           </ul>
         </nav>
         </div>
