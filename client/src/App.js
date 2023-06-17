@@ -25,7 +25,7 @@ function App() {
      
         <Switch>
           <Route exact path="/">
-            <Home />
+            <Home courts = {courts}/>
           </Route>
           <Route exact path="/courts">
             <Courts courts={courts} addCourt = {handleAddCourt} setCourts = {setCourts}/>
