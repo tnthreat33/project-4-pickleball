@@ -2,7 +2,7 @@ class CourtsController < ApplicationController
 
 def index 
     courts = Court.all
-    render json: courts
+    render json: courts, include: :reservations
 end
 
 def create 
