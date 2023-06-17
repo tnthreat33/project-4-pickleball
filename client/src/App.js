@@ -6,6 +6,7 @@ import Home from './Home';
 import Courts from './Courts';
 import NewCourtForm from './NewCourtForm';
 import Reservations from './Reservations';
+import NewReservationForm from './NewReservationForm';
 
 function App() {
   const [courts, setCourts] = useState([]);
@@ -38,7 +39,7 @@ function App() {
             <Reservations courts={courts}/>
           </Route>
           <Route exact path="/new-reservation">
-            <NewCourtForm addCourt = {handleAddCourt}/>
+            <NewReservationForm addCourt = {handleAddCourt} courts = {courts}/>
           </Route>
         </Switch>
       </div>

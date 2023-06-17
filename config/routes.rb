@@ -4,6 +4,5 @@ Rails.application.routes.draw do
   get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }
 
   resources :courts, only: [:index, :create, :destroy]
-  resoruces :reservations, only: [:create]
+  resources :reservations, only: [:create] # Fixed typo here
 end
-

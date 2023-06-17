@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 
-function NewReservationForm({addCourt}){
+function NewReservationForm({addCourt, courts}){
     const [court, setCourt] = useState('');
   const [date, setDate] = useState('');
   const [startTime, setStartTime] = useState('');
-  const [endTime, setEndTime] = useState([]);
+  const [endTime, setEndTime] = useState('');
+  const [error, setErrors] = useState([])
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -35,11 +36,12 @@ function NewReservationForm({addCourt}){
         setEndTime('');
         addCourt(reservation);
         
-      })
+      } )
       .catch((error) => {
         console.error(error);
         setErrors(['Error creating court']);
       });
+      console.log(courts)
   }
 
 return (
@@ -87,7 +89,7 @@ return (
           type="time"
           id="endTime"
           name="endTime"
-          value={formData.endTime}
+          value={endTime}
           onChange={(e) => setEndTime(e.target.value)}
           required
         />
