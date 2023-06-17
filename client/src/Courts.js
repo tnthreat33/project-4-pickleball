@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 function Courts({ courts, setCourts }) {
+  
 
   function handleDelete(courtId) {
     fetch(`/courts/${courtId}`, {
@@ -18,14 +19,16 @@ function Courts({ courts, setCourts }) {
         console.error(error);
       });
   };
+ 
 
   return (
     <>
       <h1>Courts</h1>
       <div className="button-container">
-        <Link to="/new-court" className="create-court-button">
-          Create New Court
-        </Link>
+      <Link to={'/new-court'}>
+                    <button>NewCourt</button>
+                  </Link>
+        
       </div>
       <table>
         <thead>
