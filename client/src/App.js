@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
+import { Switch, Route, Link} from 'react-router-dom';
+import NavBar from './NavBar';
 import './App.css';
 import Home from './Home';
 import Courts from './Courts';
@@ -19,19 +20,9 @@ function App() {
   }
 
   return (
-    <Router>
-      <div className="App">
-        <header>Find Your Pickleball Court</header>
-        <nav className="navbar">
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/courts">Courts</Link>
-            </li>
-          </ul>
-        </nav>
+    <div className="App">
+    <NavBar/>
+     
         <Switch>
           <Route exact path="/">
             <Home />
@@ -44,7 +35,7 @@ function App() {
           </Route>
         </Switch>
       </div>
-    </Router>
+    
   );
 }
 
