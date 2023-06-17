@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Switch, Route, Link} from 'react-router-dom';
+import { Switch, Route} from 'react-router-dom';
 import NavBar from './NavBar';
 import './App.css';
 import Home from './Home';
@@ -28,7 +28,7 @@ function App() {
             <Home />
           </Route>
           <Route exact path="/courts">
-            <Courts courts={courts} addCourt = {handleAddCourt}/>
+            <Courts courts={courts} addCourt = {handleAddCourt} setCourts = {setCourts}/>
           </Route>
           <Route exact path="/new-court">
             <NewCourtForm addCourt = {handleAddCourt}/>
