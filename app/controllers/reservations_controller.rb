@@ -12,10 +12,9 @@ class ReservationsController < ApplicationController
     private
   
     def reservation_params
-        params.require(:reservation).permit(:date, :startTime, :endTime).merge(
-          court_id: params[:court]
-        )
+        params.permit(:court_id, :date, :start_time, :end_time)
       end
+      
       
       
   end

@@ -21,6 +21,16 @@ function App() {
     setCourts((courts) => [...courts, newCourt]);
   }
 
+  function handleAddReservation(newReservation) {
+    setCourts({
+        ...courts,
+        reservations: [...courts.reservations, newReservation],
+      },
+    );
+  }
+
+
+
   return (
     <div className="App">
     <NavBar/>
@@ -39,7 +49,7 @@ function App() {
             <Reservations courts={courts}/>
           </Route>
           <Route exact path="/new-reservation">
-            <NewReservationForm addCourt = {handleAddCourt} courts = {courts}/>
+            <NewReservationForm onCreateReservation = {handleAddReservation} courts = {courts}/>
           </Route>
         </Switch>
       </div>
