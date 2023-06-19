@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 function Courts({ courts, setCourts }) {
+  const [courts, setCourts] = useState([]);
   const [selectedCourt, setSelectedCourt] = useState(null);
 
-  console.log(courts)
+  useEffect(() => {
+    fetch("/courts")
+      .then((response) => response.json())
+      .then((data) => setCourts(data));
+  }, []);
+
   
   function handleDelete(courtId) {
     fetch(`/courts/${courtId}`, {
@@ -25,6 +31,18 @@ function Courts({ courts, setCourts }) {
   const handleReservationClick = (court) => {
     setSelectedCourt(court);
   };
+
+  function handleAddCourt(newCourt) {
+    setCourts((courts) => [...courts, newCourt]);
+  }
+
+  function handleAddReservation(newReservation) {
+    setCourts({
+        ...courts,
+        reservations: [...courts.reservations, newReservation],
+      },
+    );
+  }
 
   return (
     <>

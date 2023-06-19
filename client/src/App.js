@@ -7,27 +7,24 @@ import Courts from './Courts';
 import NewCourtForm from './NewCourtForm';
 import Reservations from './Reservations';
 import NewReservationForm from './NewReservationForm';
+import Login from './Login';
 
 function App() {
-  const [courts, setCourts] = useState([]);
+  
+  const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
-    fetch("/courts")
-      .then((response) => response.json())
-      .then((data) => setCourts(data));
+    // auto-login
+    fetch("/auth").then((r) => {
+      if (r.ok) {
+        r.json().then((user) => setCurrentUser(user));
+      }
+    });
   }, []);
 
-  function handleAddCourt(newCourt) {
-    setCourts((courts) => [...courts, newCourt]);
-  }
+  if (!currentUser) return <Login setCurrentUser={setCurrentUser} />;
 
-  function handleAddReservation(newReservation) {
-    setCourts({
-        ...courts,
-        reservations: [...courts.reservations, newReservation],
-      },
-    );
-  }
+  
 
 
 
