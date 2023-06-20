@@ -18,7 +18,7 @@ function SignUpForm({ setCurrentUser }) {
     }
     setErrors([]);
     setIsLoading(true);
-    fetch("/signup", {
+    fetch("/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -36,52 +36,43 @@ function SignUpForm({ setCurrentUser }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <FormField>
-        <Label htmlFor="name">Name</Label>
-        <Input
+      
+        <label htmlFor="name">Name</label>
+        <input
           type="text"
           id="name"
           autoComplete="off"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
-      </FormField>
-      <FormField>
-        <Label htmlFor="password">Password</Label>
-        <Input
+      
+        <label htmlFor="password">Password</label>
+        <input
           type="password"
           id="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           autoComplete="current-password"
         />
-      </FormField>
-      <FormField>
-        <Label htmlFor="address">Profile Image</Label>
-        <Input
+      
+        <label htmlFor="address">Address</label>
+        <input
           type="text"
           id="address"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
         />
-      </FormField>
-      <FormField>
-        <Label htmlFor="email">Bio</Label>
-        <Textarea
+      
+        <label htmlFor="email">Email</label>
+        <input
           type="text"
           id="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-      </FormField>
-      <FormField>
-        <Button type="submit">{isLoading ? "Loading..." : "Sign Up"}</Button>
-      </FormField>
-      <FormField>
-        {errors.map((err) => (
-          <Error key={err}>{err}</Error>
-        ))}
-      </FormField>
+      
+        <button type="submit">{isLoading ? "Loading..." : "Sign Up"}</button>
+      
     </form>
   );
 }
