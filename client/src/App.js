@@ -13,28 +13,35 @@ function App() {
   const [courts, setCourts] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
 
+  console.log(currentUser);
+  console.log(courts)
+
   useEffect(() => {
     // auto-login
-    fetch("/auth").then((r) => {
-      if (r.ok) {
-        r.json().then((user) => setCurrentUser(user));
-      }
-    }).catch((error) => {
-      console.log("Auto-login error:", error);
-    });
-    
-
-  if (!currentUser) {
-    return <Login setCurrentUser={setCurrentUser} />;
-  }
-
-  fetch("/courts")
+    fetch("/auth")
+      .then((r) => {
+        if (r.ok) {
+          r.json().then((user) => setCurrentUser(user));
+        }
+      })
+      .catch((error) => {
+        console.log("Auto-login error:", error);
+      });
+      fetch("/courts")
       .then((response) => response.json())
       .then((data) => setCourts(data))
       .catch((error) => {
         console.log("Court data fetch error:", error);
       });
-  }, []); 
+  }, []);
+
+      if (!currentUser) {
+        return <Login setCurrentUser={setCurrentUser} />;
+      }
+
+   
+
+ 
 
   function handleAddCourt(newCourt) {
     setCourts((courts) => [...courts, newCourt]);

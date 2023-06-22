@@ -19,12 +19,13 @@ function SignUpForm({ setCurrentUser }) {
     setErrors([]);
     setIsLoading(true);
     fetch("/users", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({user}),
-    }).then((r) => {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify(user),
+})
+.then((r) => {
       setIsLoading(false);
       if (r.ok) {
         r.json().then((user) => setCurrentUser(user));

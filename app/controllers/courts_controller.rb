@@ -1,5 +1,6 @@
 class CourtsController < ApplicationController
-
+    skip_before_action :authorized, only: :index
+    
 def index 
     courts = Court.all
     render json: courts 
@@ -7,6 +8,7 @@ end
 
 def create 
     court = Court.create(court_params)
+    court.reservations = []
     render json: court, status: :created
 end 
 
