@@ -15,28 +15,28 @@ function NewReservationForm({ courts, onCreateReservation }) {
       start_time,
       end_time
     };
-      fetch('/reservations', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      })
-        .then((r) => {
-          if (r.ok){
-            r.json().then((newReservation) => {
-          onCreateReservation(newReservation);
-          setCourt('');
-          setDate('');
-          setStartTime('');
-          setEndTime('');
-          setErrors([]);
-            }); } else {
-              r.json().then((err) => setErrors(err.errors));
-            }
-          }
-        );
-      }
+    fetch('/reservations', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((r) => {
+        if (r.ok) {
+          r.json().then((newReservation) => {
+            onCreateReservation(newReservation);
+            setCourt('');
+            setDate('');
+            setStartTime('');
+            setEndTime('');
+            setErrors([]);
+          });
+        } else {
+          r.json().then((err) => setErrors(err.errors));
+        }
+      });
+  }
 
   return (
     <>
@@ -54,7 +54,9 @@ function NewReservationForm({ courts, onCreateReservation }) {
           <option value="">Select a court</option>
           {/* Render the available courts as options */}
           {courts.map((court) => (
-            <option key={court.id} value={court.id}>{court.name}</option>
+            <option key={court.id} value={court.id}>
+              {court.name}
+            </option>
           ))}
         </select>
 

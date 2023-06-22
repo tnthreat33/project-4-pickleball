@@ -9,4 +9,5 @@ Rails.application.routes.draw do
 
   post "/login", to: "sessions#create"
   get "/auth", to: "users#show"
+  delete "/logout", to: "seesions#destroy"
 end

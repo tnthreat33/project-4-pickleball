@@ -10,4 +10,10 @@ class SessionsController < ApplicationController
         render json: {errors: {login: "Invalid Email or Password"}}
     end
 end
+
+def destroy 
+    session.delete :user_id
+    head :no_content
+end
+
 end 

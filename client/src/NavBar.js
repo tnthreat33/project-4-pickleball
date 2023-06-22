@@ -2,10 +2,17 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import './NavBar.css';
 
-function NavBar(){
+function NavBar({onLogout}){
+  function handleLogout() {
+    fetch("/logout", {
+      method: "DELETE",
+    }).then(() => onLogout());
+  }
     return(
         <div className="navbar">
-        <header>Find Your Pickleball Court</header>
+        <header>Find Your Pickleball Court
+        <button onClick={handleLogout}>Logout</button>
+        </header>
         <nav className="navbar">
           <ul>
             <li>

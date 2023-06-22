@@ -13,9 +13,6 @@ function App() {
   const [courts, setCourts] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
 
-  console.log(currentUser);
-  console.log(courts)
-
   useEffect(() => {
     // auto-login
     fetch("/auth")
@@ -27,7 +24,8 @@ function App() {
       .catch((error) => {
         console.log("Auto-login error:", error);
       });
-      fetch("/courts")
+
+    fetch("/courts")
       .then((response) => response.json())
       .then((data) => setCourts(data))
       .catch((error) => {
@@ -35,28 +33,36 @@ function App() {
       });
   }, []);
 
-      if (!currentUser) {
-        return <Login setCurrentUser={setCurrentUser} />;
-      }
-
-   
-
- 
-
   function handleAddCourt(newCourt) {
     setCourts((courts) => [...courts, newCourt]);
   }
 
   function handleAddReservation(newReservation) {
-    setCourts((prevCourts) => ({
-      ...prevCourts,
-      reservations: [...prevCourts.reservations, newReservation],
+    setCourts((courts) => ({
+      ...courts,
+      reservations: [...courts.reservations, newReservation],
     }));
+  }
+
+  function handleLogout() {
+    fetch("/logout", {
+      method: "DELETE",
+    })
+      .then(() => {
+        setCurrentUser(null); // Remove the user from state
+      })
+      .catch((error) => {
+        console.log("Logout error:", error);
+      });
+  }
+
+  if (!currentUser) {
+    return <Login setCurrentUser={setCurrentUser} />;
   }
 
   return (
     <div className="App">
-      <NavBar />
+      <NavBar onLogout={handleLogout} />
       <Switch>
         <Route exact path="/">
           <Home courts={courts} />
@@ -71,7 +77,10 @@ function App() {
           <Reservations courts={courts} />
         </Route>
         <Route exact path="/new-reservation">
-          <NewReservationForm onCreateReservation={handleAddReservation} courts={courts} />
+          <NewReservationForm
+            onCreateReservation={handleAddReservation}
+            courts={courts}
+          />
         </Route>
       </Switch>
     </div>
