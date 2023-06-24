@@ -1,6 +1,7 @@
 import React from "react";
 
 function UserProfile({ user }) {
+  console.log(user)
 
   return (
     <>
@@ -14,8 +15,8 @@ function UserProfile({ user }) {
             {user.reservations.map(reservation => (
               <li key={reservation.id}>
                 <p>Date: {reservation.date}</p>
-                <p>Start Time: {reservation.start_time}</p>
-                <p>End Time: {reservation.end_time}</p>
+                <p>Start Time: {new Date(reservation.start_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - 
+    End Time: {new Date(reservation.end_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
               </li>
             ))}
           </ul>

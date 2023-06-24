@@ -13,7 +13,7 @@ import UserProfile from './UserProfile';
 function App() {
   const [courts, setCourts] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
-  console.log(courts, currentUser)
+ 
 
   useEffect(() => {
     // auto-login
