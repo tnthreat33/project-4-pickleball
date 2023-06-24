@@ -10,6 +10,16 @@ class ReservationsController < ApplicationController
     end
   end
 
+  def destroy 
+    reservation = Reservation.find_by(id: params[:id])
+    if reservation
+        reservation.destroy 
+        head :no_content
+    else 
+        render json: {error: "Court not found"}, status: :not_found
+    end 
+end
+
   private
 
   def reservation_params

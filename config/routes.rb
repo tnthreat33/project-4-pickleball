@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }
 
   resources :courts, only: [:index, :create, :destroy]
-  resources :reservations, only: [:create] 
+  resources :reservations, only: [:create, :destroy] 
   resources :users, only: [:create, :show]
 
   post "/login", to: "sessions#create"

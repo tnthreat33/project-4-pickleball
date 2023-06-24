@@ -13,6 +13,7 @@ import UserProfile from './UserProfile';
 function App() {
   const [courts, setCourts] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
+  console.log(courts, currentUser)
 
   useEffect(() => {
     // auto-login
@@ -75,7 +76,7 @@ function App() {
           <NewCourtForm addCourt={handleAddCourt} />
         </Route>
         <Route exact path="/reservations">
-          <Reservations courts={courts} />
+          <Reservations courts={courts} setCourts= {setCourts} setCurrentUser={setCurrentUser} currentUser={currentUser}/>
         </Route>
         <Route exact path="/new-reservation">
           <NewReservationForm
