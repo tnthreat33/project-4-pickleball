@@ -4,7 +4,7 @@ class ReservationsController < ApplicationController
     reservation.user_id = session[:user_id] # Set the user_id from the session
 
     if reservation.save
-      render json: reservation, status: :created
+      render json: { reservation: reservation, user_id: reservation.user_id }, status: :created
     else
       render json: { error: 'Error creating reservation' }, status: :unprocessable_entity
     end

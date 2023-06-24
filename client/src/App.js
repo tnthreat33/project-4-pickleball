@@ -8,6 +8,7 @@ import Reservations from './Reservations';
 import NewReservationForm from './NewReservationForm';
 import Login from './Login';
 import NewCourtForm from './NewCourtForm';
+import UserProfile from './UserProfile';
 
 function App() {
   const [courts, setCourts] = useState([]);
@@ -81,6 +82,9 @@ function App() {
             onCreateReservation={handleAddReservation}
             courts={courts}
           />
+        </Route>
+        <Route exact path="/profile">
+          <UserProfile user={currentUser} courts={courts}/>
         </Route>
       </Switch>
     </div>

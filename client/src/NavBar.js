@@ -21,9 +21,12 @@ function NavBar({onLogout}){
             <li>
               <NavLink to="/courts">Courts</NavLink>
             </li>
-            <l1>
+            <li>
                 <NavLink to="/reservations">Reservations</NavLink>
-            </l1>
+            </li>
+            <li>
+                <NavLink to="/profile">Profile</NavLink>
+            </li>
           </ul>
         </nav>
         </div>

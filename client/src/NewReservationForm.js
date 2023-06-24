@@ -25,6 +25,7 @@ function NewReservationForm({ courts, onCreateReservation }) {
       .then((r) => {
         if (r.ok) {
           r.json().then((newReservation) => {
+            console.log(newReservation)
             onCreateReservation(newReservation);
             setCourt('');
             setDate('');

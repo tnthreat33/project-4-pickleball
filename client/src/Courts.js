@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom';
 function Courts({courts, setCourts}) {
   
   const [selectedCourt, setSelectedCourt] = useState(null);
-console.log(courts)
-
 
   
   function handleDelete(courtId) {
