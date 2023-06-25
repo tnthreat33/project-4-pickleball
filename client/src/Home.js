@@ -34,7 +34,7 @@ function Home({ courts }) {
           <button>All Courts</button>
         </Link>
         <h3> Make Your Reservations</h3>
-        <Link to="/new-reservations">
+        <Link to="/new-reservation">
           <button> Make Reservation</button>
         </Link>
       </div>

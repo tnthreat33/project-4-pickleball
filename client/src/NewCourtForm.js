@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import './NewCourtForm.css';
 
 function NewCourtForm({ addCourt }) {
   const [name, setName] = useState('');
@@ -34,7 +34,6 @@ function NewCourtForm({ addCourt }) {
         setPrice('');
         setErrors([]);
         addCourt(court);
-        
       })
       .catch((error) => {
         console.error(error);
@@ -43,39 +42,41 @@ function NewCourtForm({ addCourt }) {
   }
 
   return (
-    <div>
+    <div className="form-container">
       <h2>Create New Court</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Name:
+      <div className="card">
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="name">Name:</label>
           <input
             type="text"
+            id="name"
             name="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-        </label>
-        <label>
-          Address:
+
+          <label htmlFor="address">Address:</label>
           <input
             type="text"
+            id="address"
             name="address"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
           />
-        </label>
-        <label>
-          Price:
+
+          <label htmlFor="price">Price:</label>
           <input
             type="number"
+            id="price"
             name="price"
             step="1"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
           />
-        </label>
-        <button type="submit">Create</button>
-      </form>
+
+          <button type="submit">Create</button>
+        </form>
+      </div>
     </div>
   );
 }
