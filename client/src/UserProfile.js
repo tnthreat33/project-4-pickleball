@@ -1,5 +1,6 @@
 import React from "react";
 import "./UserProfile.css";
+import { Link } from 'react-router-dom';
 
 function UserProfile({ user, courts }) {
   
@@ -15,6 +16,9 @@ function UserProfile({ user, courts }) {
       <h3>{user.email}</h3>
 
       <h2>Your Reservations:</h2>
+      <Link to={'/reservations'}>
+                        <button>Edit Reservations</button>
+                      </Link>
       {user.reservations.length > 0 ? (
         <div className="reservation-container">
           {user.reservations.map((reservation) => (

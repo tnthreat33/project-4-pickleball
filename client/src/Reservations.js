@@ -68,7 +68,9 @@ function Reservations({ courts, setCourts, setCurrentUser, currentUser }) {
                 const court = courts.find((court) => court.id === reservation.court_id);
                 return (
                   <tr key={reservation.id}>
-                    <h4>{court ? court.name : 'Unknown Court'} -</h4>
+                    <td>
+                      <h4>{court ? court.name : 'Unknown Court'} -</h4>
+                    </td>
                     <td>{formatDate(reservation.date)}</td>
                     <td>
                       {new Date(reservation.start_time).toLocaleTimeString([], {
@@ -80,6 +82,11 @@ function Reservations({ courts, setCourts, setCurrentUser, currentUser }) {
                         hour: '2-digit',
                         minute: '2-digit',
                       })}
+                    </td>
+                    <td>
+                      <Link to={`/update-reservation/${reservation.id}`}>
+                        <button>Update</button>
+                      </Link>
                     </td>
                     <td>
                       <button onClick={() => handleDelete(reservation.id)}>Delete</button>
@@ -115,9 +122,7 @@ function Reservations({ courts, setCourts, setCurrentUser, currentUser }) {
                           minute: '2-digit',
                         })}
                       </td>
-                      <td>
-                        <button onClick={() => handleDelete(reservation.id)}>Delete</button>
-                      </td>
+                      
                     </tr>
                   ))}
                 </tbody>

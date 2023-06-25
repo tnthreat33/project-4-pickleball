@@ -9,6 +9,7 @@ import NewReservationForm from './NewReservationForm';
 import Login from './Login';
 import NewCourtForm from './NewCourtForm';
 import UserProfile from './UserProfile';
+//import UpdateReservationForm from './UpdateReservationForm';
 
 function App() {
   const [courts, setCourts] = useState([]);
@@ -84,6 +85,7 @@ function App() {
             courts={courts}
           />
         </Route>
+        
         <Route exact path="/profile">
           <UserProfile user={currentUser} courts={courts}/>
         </Route>
@@ -93,3 +95,7 @@ function App() {
 }
 
 export default App;
+
+/*<Route exact path="/update-reservation/:reservationId">
+<UpdateReservationForm courts={courts} setCourts={setCourts} currentUser={currentUser} />
+</Route>*/

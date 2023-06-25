@@ -2,24 +2,10 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Courts.css';
 
-function Courts({ courts, setCourts }) {
+function Courts({ courts }) {
   const [selectedCourt, setSelectedCourt] = useState(null);
 
-  function handleDelete(courtId) {
-    fetch(`/courts/${courtId}`, {
-      method: 'DELETE',
-    })
-      .then((response) => {
-        if (response.ok) {
-          setCourts((prevCourts) => prevCourts.filter((court) => court.id !== courtId));
-        } else {
-          throw new Error('Failed to delete court');
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
+ 
 
   const handleReservationClick = (court) => {
     setSelectedCourt(court);
@@ -42,7 +28,6 @@ function Courts({ courts, setCourts }) {
               <th>Location</th>
               <th>Price</th>
               <th>See Reservations</th>
-              <th>Delete</th>
             </tr>
           </thead>
           <tbody>
@@ -71,9 +56,7 @@ function Courts({ courts, setCourts }) {
                     </div>
                   )}
                 </td>
-                <td>
-                  <button onClick={() => handleDelete(court.id)}>Delete</button>
-                </td>
+                
               </tr>
             ))}
           </tbody>
