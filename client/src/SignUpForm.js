@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import './Signup.css'
 
 function SignUpForm({ setCurrentUser }) {
   const [name, setName] = useState("");
@@ -36,6 +37,8 @@ function SignUpForm({ setCurrentUser }) {
   }
 
   return (
+    <div className= "signup-container">
+      <h1> Create Your Account </h1>
     <form onSubmit={handleSubmit}>
       
         <label htmlFor="name">Name</label>
@@ -75,6 +78,7 @@ function SignUpForm({ setCurrentUser }) {
         <button type="submit">{isLoading ? "Loading..." : "Sign Up"}</button>
       
     </form>
+    </div>
   );
 }
 

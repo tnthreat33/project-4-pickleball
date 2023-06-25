@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import SignUpForm from "./SignUpForm";
+import './Login.css';
 
 function Login({ setCurrentUser }) {
   const [password, setPassword] = useState("");
@@ -36,6 +37,12 @@ function Login({ setCurrentUser }) {
   }
 
   return (
+    <>
+    <div className="login-header">
+      <h1>Welcome to Pickleball Center</h1>
+      <h3> Login to see the courts and make your reservations</h3>
+    </div>
+    <div className="login-container">
     <form onSubmit={handleSubmit}>
       <label htmlFor="email">Email</label>
       <input
@@ -60,6 +67,8 @@ function Login({ setCurrentUser }) {
 
       <button onClick={handleShowSignUpForm}>Sign Up</button>
     </form>
+    </div>
+    </>
   );
 }
 
