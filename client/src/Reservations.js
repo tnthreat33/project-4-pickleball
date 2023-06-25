@@ -10,7 +10,44 @@ function Reservations({ courts, setCourts, setCurrentUser, currentUser }) {
   };
 
   function handleDelete(reservationId) {
-    // ... delete reservation logic ...
+    fetch(`/reservations/${reservationId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log('Reservation deleted:', reservationId);
+          // Update the courts state
+          const updatedCourts = courts.map((court) => {
+            const updatedReservations = court.reservations.filter(
+              (reservation) => reservation.id !== reservationId
+            );
+            return {
+              ...court,
+              reservations: updatedReservations,
+            };
+          });
+          setCourts(updatedCourts);
+          // Update the currentUser state
+          const updatedUser = {
+            ...currentUser,
+            reservations: currentUser.reservations.filter(
+              (reservation) => reservation.id !== reservationId
+            ),
+          };
+          setCurrentUser(updatedUser);
+        } else {
+          // Error deleting reservation
+          console.log('Error deleting reservation:', reservationId);
+          // Implement error handling logic as needed
+        }
+      })
+      .catch((error) => {
+        console.log('Delete reservation error:', error);
+        // Implement error handling logic as needed
+      });
   }
 
   return (
@@ -27,26 +64,29 @@ function Reservations({ courts, setCourts, setCurrentUser, currentUser }) {
         {currentUser.reservations.length > 0 ? (
           <table>
             <tbody>
-              {currentUser.reservations.map((reservation) => (
-                <tr key={reservation.id}>
-                  <td>{reservation.court}</td>
-                  <td>{formatDate(reservation.date)}</td>
-                  <td>
-                    {new Date(reservation.start_time).toLocaleTimeString([], {
-                      hour: '2-digit',
-                      minute: '2-digit',
-                    })}{' '}
-                    -{' '}
-                    {new Date(reservation.end_time).toLocaleTimeString([], {
-                      hour: '2-digit',
-                      minute: '2-digit',
-                    })}
-                  </td>
-                  <td>
-                    <button onClick={() => handleDelete(reservation.id)}>Delete</button>
-                  </td>
-                </tr>
-              ))}
+              {currentUser.reservations.map((reservation) => {
+                const court = courts.find((court) => court.id === reservation.court_id);
+                return (
+                  <tr key={reservation.id}>
+                    <h4>{court ? court.name : 'Unknown Court'} -</h4>
+                    <td>{formatDate(reservation.date)}</td>
+                    <td>
+                      {new Date(reservation.start_time).toLocaleTimeString([], {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                      })}{' '}
+                      -{' '}
+                      {new Date(reservation.end_time).toLocaleTimeString([], {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                      })}
+                    </td>
+                    <td>
+                      <button onClick={() => handleDelete(reservation.id)}>Delete</button>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         ) : (
