@@ -26,7 +26,6 @@ function NewReservationForm({ courts, onCreateReservation }) {
       .then((r) => {
         if (r.ok) {
           r.json().then((newReservation) => {
-            console.log(newReservation)
             onCreateReservation(newReservation);
             setCourt('');
             setDate('');
@@ -55,7 +54,6 @@ function NewReservationForm({ courts, onCreateReservation }) {
             required
           >
             <option value="">Select a court</option>
-            {/* Render the available courts as options */}
             {courts.map((court) => (
               <option key={court.id} value={court.id}>
                 {court.name}

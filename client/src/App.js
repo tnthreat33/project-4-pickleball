@@ -9,7 +9,7 @@ import NewReservationForm from './NewReservationForm';
 import Login from './Login';
 import NewCourtForm from './NewCourtForm';
 import UserProfile from './UserProfile';
-//import UpdateReservationForm from './UpdateReservationForm';
+import UpdateReservationForm from './UpdateReservationForm';
 
 function App() {
   const [courts, setCourts] = useState([]);
@@ -40,12 +40,31 @@ function App() {
     setCourts((courts) => [...courts, newCourt]);
   }
 
+  
   function handleAddReservation(newReservation) {
-    setCourts((courts) => ({
-      ...courts,
-      reservations: [...courts.reservations, newReservation],
-    }));
-  }
+  setCourts((prevCourts) => {
+    const updatedCourts = prevCourts.map((court) => {
+      if (court.id === newReservation.court_id) {
+        return {
+          ...court,
+          reservations: [...court.reservations, newReservation],
+        };
+      }
+      return courts;
+    });
+    return updatedCourts;
+  });
+
+  setCurrentUser((prevUser) => {
+    return {
+      ...prevUser,
+      reservations: [...prevUser.reservations, newReservation],
+    };
+  });
+}
+
+  
+  
 
   function handleLogout() {
     fetch("/logout", {
@@ -85,7 +104,9 @@ function App() {
             courts={courts}
           />
         </Route>
-        
+        <Route exact path="/update-reservation/:reservationId">
+          <UpdateReservationForm courts={courts} setCourts={setCourts} currentUser={currentUser} />
+          </Route>
         <Route exact path="/profile">
           <UserProfile user={currentUser} courts={courts}/>
         </Route>
@@ -96,6 +117,3 @@ function App() {
 
 export default App;
 
-/*<Route exact path="/update-reservation/:reservationId">
-<UpdateReservationForm courts={courts} setCourts={setCourts} currentUser={currentUser} />
-</Route>*/

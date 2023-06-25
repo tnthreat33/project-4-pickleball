@@ -1,46 +1,33 @@
-/*import React, { useState, useEffect } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 
 function UpdateReservationForm({ courts, setCourts, currentUser }) {
   const { reservationId } = useParams();
-  const [courtId, setCourtId] = useState('');
-  const [date, setDate] = useState('');
-  const [startTime, setStartTime] = useState('');
-  const [endTime, setEndTime] = useState('');
   const history = useHistory();
 
-  useEffect(() => {
-    // Fetch the reservation details based on reservationId
-    const reservation = currentUser.reservations.find(
-      (reservation) => reservation.id === Number(reservationId)
-    );
+  const selectedReservation = currentUser.reservations.find(
+    (reservation) => reservation.id === Number(reservationId)
+  );
 
-    if (reservation) {
-      const { court_id, date, start_time, end_time } = reservation;
-      setCourtId(court_id);
-      setDate(date);
-      setStartTime(start_time);
-      setEndTime(end_time);
-    }
-  }, [currentUser.reservations, reservationId]);
+  const [reservation, setReservation] = useState(selectedReservation);
 
-  function handleSubmit(e) {
-    e.preventDefault();
+  function handleInputChange(event) {
+    const { name, value } = event.target;
+    setReservation((prevReservation) => ({
+      ...prevReservation,
+      [name]: value,
+    }));
+  }
 
-    const updatedReservation = {
-      court_id: courtId,
-      date,
-      start_time: startTime,
-      end_time: endTime,
-    };
+  function handleSubmit(event) {
+    event.preventDefault();
 
-     Send a request to update the reservation
     fetch(`/reservations/${reservationId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(updatedReservation),
+      body: JSON.stringify(reservation),
     })
       .then((response) => {
         if (response.ok) {
@@ -50,7 +37,6 @@ function UpdateReservationForm({ courts, setCourts, currentUser }) {
         }
       })
       .then((updatedReservation) => {
-        
         const updatedCourts = courts.map((court) => {
           if (court.id === updatedReservation.court_id) {
             const updatedReservations = court.reservations.map((reservation) => {
@@ -68,12 +54,10 @@ function UpdateReservationForm({ courts, setCourts, currentUser }) {
         });
         setCourts(updatedCourts);
 
-        
         history.push('/reservations');
       })
       .catch((error) => {
         console.log('Reservation update error:', error);
-        
       });
   }
 
@@ -85,8 +69,8 @@ function UpdateReservationForm({ courts, setCourts, currentUser }) {
         <select
           id="court_id"
           name="court_id"
-          value={courtId}
-          onChange={(e) => setCourtId(e.target.value)}
+          value={reservation.court_id}
+          onChange={handleInputChange}
           required
         >
           <option value="">Select a court</option>
@@ -102,8 +86,8 @@ function UpdateReservationForm({ courts, setCourts, currentUser }) {
           type="date"
           id="date"
           name="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
+          value={reservation.date}
+          onChange={handleInputChange}
           required
         />
 
@@ -112,8 +96,8 @@ function UpdateReservationForm({ courts, setCourts, currentUser }) {
           type="time"
           id="start_time"
           name="start_time"
-          value={startTime}
-          onChange={(e) => setStartTime(e.target.value)}
+          value={reservation.start_time}
+          onChange={handleInputChange}
           required
         />
 
@@ -122,8 +106,8 @@ function UpdateReservationForm({ courts, setCourts, currentUser }) {
           type="time"
           id="end_time"
           name="end_time"
-          value={endTime}
-          onChange={(e) => setEndTime(e.target.value)}
+          value={reservation.end_time}
+          onChange={handleInputChange}
           required
         />
 
@@ -133,4 +117,4 @@ function UpdateReservationForm({ courts, setCourts, currentUser }) {
   );
 }
 
-export default UpdateReservationForm;*/
+export default UpdateReservationForm;
