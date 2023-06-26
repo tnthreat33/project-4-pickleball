@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import {  useParams } from 'react-router-dom';
 
 function UpdateReservationForm({ courts, setCourts, currentUser }) {
   const { reservationId } = useParams();
-  const history = useHistory();
+  console.log(reservationId)
+ // const history = useHistory();
 
   const selectedReservation = currentUser.reservations.find(
     (reservation) => reservation.id === Number(reservationId)
@@ -54,7 +55,7 @@ function UpdateReservationForm({ courts, setCourts, currentUser }) {
         });
         setCourts(updatedCourts);
 
-        history.push('/reservations');
+       // history.push('/reservations');
       })
       .catch((error) => {
         console.log('Reservation update error:', error);

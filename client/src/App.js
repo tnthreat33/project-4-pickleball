@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Switch, Route} from 'react-router-dom';
+import { Routes, Route} from 'react-router-dom';
 import NavBar from './NavBar';
 import './App.css';
 import Home from './Home';
@@ -42,18 +42,16 @@ function App() {
 
   
   function handleAddReservation(newReservation) {
-  setCourts((prevCourts) => {
-    const updatedCourts = prevCourts.map((court) => {
+    const updatedCourts = courts.map((court) => {
       if (court.id === newReservation.court_id) {
         return {
           ...court,
           reservations: [...court.reservations, newReservation],
         };
       }
-      return courts;
+      return court;
     });
-    return updatedCourts;
-  });
+  setCourts(updatedCourts);
 
   setCurrentUser((prevUser) => {
     return {
@@ -85,11 +83,10 @@ function App() {
   return (
     <div className="App">
       <NavBar onLogout={handleLogout} user = {currentUser}/>
-      <Switch>
-        <Route exact path="/">
-          <Home courts={courts} />
-        </Route>
-        <Route exact path="/courts">
+      <Routes>
+      <Route path="/" element={<Home courts={courts} />}/>
+        
+        {/* <Route exact path="/courts">
           <Courts courts={courts} addCourt={handleAddCourt} setCourts={setCourts} />
         </Route>
         <Route exact path="/new-court">
@@ -109,8 +106,8 @@ function App() {
           </Route>
         <Route exact path="/profile">
           <UserProfile user={currentUser} courts={courts}/>
-        </Route>
-      </Switch>
+        </Route> */}
+      </Routes>
     </div>
   );
 }
