@@ -85,28 +85,27 @@ function App() {
       <NavBar onLogout={handleLogout} user = {currentUser}/>
       <Routes>
       <Route path="/" element={<Home courts={courts} />}/>
-        
-        {/* <Route exact path="/courts">
-          <Courts courts={courts} addCourt={handleAddCourt} setCourts={setCourts} />
-        </Route>
-        <Route exact path="/new-court">
-          <NewCourtForm addCourt={handleAddCourt} />
-        </Route>
-        <Route exact path="/reservations">
-          <Reservations courts={courts} setCourts= {setCourts} setCurrentUser={setCurrentUser} currentUser={currentUser}/>
-        </Route>
-        <Route exact path="/new-reservation">
-          <NewReservationForm
+       <Route exact path="/courts"
+         element={ <Courts courts={courts} addCourt={handleAddCourt} setCourts={setCourts} />}
+        />
+        <Route exact path="/new-court"
+          element={<NewCourtForm addCourt={handleAddCourt} />}
+        />
+        <Route exact path="/reservations"
+          element={<Reservations courts={courts} setCourts= {setCourts} setCurrentUser={setCurrentUser} currentUser={currentUser}/>}
+        />
+        <Route exact path="/new-reservation"
+          element={<NewReservationForm
             onCreateReservation={handleAddReservation}
             courts={courts}
+          />}
+        />
+        <Route exact path="/update-reservation/:reservationId"
+          element={<UpdateReservationForm courts={courts} setCourts={setCourts} currentUser={currentUser} />}
           />
-        </Route>
-        <Route exact path="/update-reservation/:reservationId">
-          <UpdateReservationForm courts={courts} setCourts={setCourts} currentUser={currentUser} />
-          </Route>
-        <Route exact path="/profile">
-          <UserProfile user={currentUser} courts={courts}/>
-        </Route> */}
+        <Route exact path="/profile"
+          element={<UserProfile user={currentUser} courts={courts}/>}
+        /> 
       </Routes>
     </div>
   );

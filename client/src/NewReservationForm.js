@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './NewReservationForm.css';
 
 function NewReservationForm({ courts, onCreateReservation }) {
@@ -7,6 +8,7 @@ function NewReservationForm({ courts, onCreateReservation }) {
   const [start_time, setStartTime] = useState('');
   const [end_time, setEndTime] = useState('');
   const [error, setErrors] = useState([]);
+  const navigate = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -32,6 +34,7 @@ function NewReservationForm({ courts, onCreateReservation }) {
             setStartTime('');
             setEndTime('');
             setErrors([]);
+            navigate('/reservations');
           });
         } else {
           r.json().then((err) => setErrors(err.errors));

@@ -3,6 +3,7 @@ import './Reservations.css';
 import { Link } from 'react-router-dom';
 
 function Reservations({ courts, setCourts, setCurrentUser, currentUser }) {
+  
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const options = { month: 'long', day: 'numeric', year: 'numeric' };

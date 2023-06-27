@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import {  useParams } from 'react-router-dom';
+import {  useParams, useNavigate } from 'react-router-dom';
 
 function UpdateReservationForm({ courts, setCourts, currentUser }) {
   const { reservationId } = useParams();
-  console.log(reservationId)
- // const history = useHistory();
+ const navigate = useNavigate();
+
 
   const selectedReservation = currentUser.reservations.find(
     (reservation) => reservation.id === Number(reservationId)
@@ -55,7 +55,7 @@ function UpdateReservationForm({ courts, setCourts, currentUser }) {
         });
         setCourts(updatedCourts);
 
-       // history.push('/reservations');
+       navigate('/reservations');
       })
       .catch((error) => {
         console.log('Reservation update error:', error);
