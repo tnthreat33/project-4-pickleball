@@ -3,7 +3,6 @@ import './Reservations.css';
 import { Link } from 'react-router-dom';
 
 function Reservations({ courts, setCourts, setCurrentUser, currentUser }) {
-  
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const options = { month: 'long', day: 'numeric', year: 'numeric' };
@@ -20,7 +19,6 @@ function Reservations({ courts, setCourts, setCurrentUser, currentUser }) {
       .then((response) => {
         if (response.ok) {
           console.log('Reservation deleted:', reservationId);
-          // Update the courts state
           const updatedCourts = courts.map((court) => {
             const updatedReservations = court.reservations.filter(
               (reservation) => reservation.id !== reservationId
@@ -31,7 +29,6 @@ function Reservations({ courts, setCourts, setCurrentUser, currentUser }) {
             };
           });
           setCourts(updatedCourts);
-          // Update the currentUser state
           const updatedUser = {
             ...currentUser,
             reservations: currentUser.reservations.filter(
@@ -40,14 +37,11 @@ function Reservations({ courts, setCourts, setCurrentUser, currentUser }) {
           };
           setCurrentUser(updatedUser);
         } else {
-          // Error deleting reservation
           console.log('Error deleting reservation:', reservationId);
-          // Implement error handling logic as needed
         }
       })
       .catch((error) => {
         console.log('Delete reservation error:', error);
-        // Implement error handling logic as needed
       });
   }
 
@@ -123,7 +117,6 @@ function Reservations({ courts, setCourts, setCurrentUser, currentUser }) {
                           minute: '2-digit',
                         })}
                       </td>
-                      
                     </tr>
                   ))}
                 </tbody>

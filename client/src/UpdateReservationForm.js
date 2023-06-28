@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {  useParams, useNavigate } from 'react-router-dom';
 
-function UpdateReservationForm({ courts, setCourts, currentUser }) {
+function UpdateReservationForm({ courts, currentUser,  handleUpdateReservation }) {
   const { reservationId } = useParams();
  const navigate = useNavigate();
 
 
-  const selectedReservation = currentUser.reservations.find(
-    (reservation) => reservation.id === Number(reservationId)
-  );
+ const selectedReservation = currentUser.reservations.find(
+  (reservation) => reservation.id === Number(reservationId)
+);
 
   const [reservation, setReservation] = useState(selectedReservation);
+
 
   function handleInputChange(event) {
     const { name, value } = event.target;
@@ -19,10 +20,11 @@ function UpdateReservationForm({ courts, setCourts, currentUser }) {
       [name]: value,
     }));
   }
+  
 
   function handleSubmit(event) {
     event.preventDefault();
-
+  
     fetch(`/reservations/${reservationId}`, {
       method: 'PATCH',
       headers: {
@@ -38,29 +40,14 @@ function UpdateReservationForm({ courts, setCourts, currentUser }) {
         }
       })
       .then((updatedReservation) => {
-        const updatedCourts = courts.map((court) => {
-          if (court.id === updatedReservation.court_id) {
-            const updatedReservations = court.reservations.map((reservation) => {
-              if (reservation.id === updatedReservation.id) {
-                return updatedReservation;
-              }
-              return reservation;
-            });
-            return {
-              ...court,
-              reservations: updatedReservations,
-            };
-          }
-          return court;
-        });
-        setCourts(updatedCourts);
-
-       navigate('/reservations');
+        handleUpdateReservation(updatedReservation)
+        navigate('/reservations');
       })
       .catch((error) => {
         console.log('Reservation update error:', error);
       });
   }
+  
 
   return (
     <div>

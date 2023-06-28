@@ -23,11 +23,8 @@ class ReservationsController < ApplicationController
   def update
     reservation = Reservation.find_by(id: params[:id])
     if reservation
-      if reservation.update(reservation_params)
-        render json: { reservation: reservation, user_id: reservation.user_id }, status: :ok
-      else
-        render json: { error: reservation.errors.full_messages }, status: :unprocessable_entity
-      end
+      reservation.update(reservation_params)
+        render json: reservation, status: :accepted
     else
       render json: { error: 'Reservation not found' }, status: :not_found
     end

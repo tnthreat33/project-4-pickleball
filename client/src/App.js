@@ -61,8 +61,41 @@ function App() {
   });
 }
 
-  
-  
+function handleUpdateReservation(updatedReservation) {
+  const updatedCourts = courts.map((court) => {
+    if (court.id === updatedReservation.court_id) {
+      const updatedReservations = court.reservations.map((reservation) => {
+        if (reservation.id === updatedReservation.id) {
+          return updatedReservation;
+        }
+        return reservation;
+      });
+
+      return {
+        ...court,
+        reservations: updatedReservations,
+      };
+    }
+    return court;
+  });
+
+  setCourts(updatedCourts);
+
+  const updatedUserReservations = currentUser.reservations.map((reservation) => {
+    if (reservation.id === updatedReservation.id) {
+      return updatedReservation;
+    }
+    return reservation;
+  });
+
+  setCurrentUser((prevUser) => ({
+    ...prevUser,
+    reservations: updatedUserReservations,
+  }));
+}
+
+
+ 
 
   function handleLogout() {
     fetch("/logout", {
@@ -101,7 +134,7 @@ function App() {
           />}
         />
         <Route exact path="/update-reservation/:reservationId"
-          element={<UpdateReservationForm courts={courts} setCourts={setCourts} currentUser={currentUser} />}
+          element={<UpdateReservationForm courts={courts} currentUser={currentUser}  handleUpdateReservation= {handleUpdateReservation}/>}
           />
         <Route exact path="/profile"
           element={<UserProfile user={currentUser} courts={courts}/>}
