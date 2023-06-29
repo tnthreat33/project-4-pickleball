@@ -4,11 +4,11 @@ import './Courts.css';
 
 function Courts({ courts }) {
   const [selectedCourt, setSelectedCourt] = useState(null);
-
- 
+  const [showReservations, setShowReservations] = useState(false);
 
   const handleReservationClick = (court) => {
     setSelectedCourt(court);
+    setShowReservations(!showReservations);
   };
 
   return (
@@ -37,16 +37,17 @@ function Courts({ courts }) {
                 <td>{court.address}</td>
                 <td>{court.price}</td>
                 <td>
-                  <button onClick={() => handleReservationClick(court)}>View Reservations</button>
-                  {selectedCourt === court && (
+                  <button onClick={() => handleReservationClick(court)}>
+                    {selectedCourt === court && showReservations ? 'Hide Reservations' : 'View Reservations'}
+                  </button>
+                  {selectedCourt === court && showReservations && (
                     <div>
                       <h4>Reservations for {court.name}</h4>
                       {court.reservations.length > 0 ? (
                         <ul>
                           {court.reservations.map((reservation) => (
                             <li key={reservation.id}>
-                              | Date: {reservation.date} | Start Time: {new Date(reservation.start_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} -
-                              End Time: {new Date(reservation.end_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                              | Date: {reservation.date}  Time: {reservation.formatted_time}
                             </li>
                           ))}
                         </ul>
@@ -56,7 +57,6 @@ function Courts({ courts }) {
                     </div>
                   )}
                 </td>
-                
               </tr>
             ))}
           </tbody>

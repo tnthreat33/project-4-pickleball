@@ -3,11 +3,6 @@ import './Reservations.css';
 import { Link } from 'react-router-dom';
 
 function Reservations({ courts, setCourts, setCurrentUser, currentUser }) {
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const options = { month: 'long', day: 'numeric', year: 'numeric' };
-    return date.toLocaleDateString('en-US', options);
-  };
 
   function handleDelete(reservationId) {
     fetch(`/reservations/${reservationId}`, {
@@ -45,6 +40,15 @@ function Reservations({ courts, setCourts, setCurrentUser, currentUser }) {
       });
   }
 
+  const formatDate = (dateString) => {
+    const date = new Date(`${dateString}T00:00:00Z`);
+    const year = date.getUTCFullYear();
+    const month = (date.getUTCMonth() + 1).toString().padStart(2, '0');
+    const day = date.getUTCDate().toString().padStart(2, '0');
+    return `${month}/${day}/${year}`;
+  };
+
+
   return (
     <div className="reservations-container">
       <h1>Reservations</h1>
@@ -68,15 +72,7 @@ function Reservations({ courts, setCourts, setCurrentUser, currentUser }) {
                     </td>
                     <td>{formatDate(reservation.date)}</td>
                     <td>
-                      {new Date(reservation.start_time).toLocaleTimeString([], {
-                        hour: '2-digit',
-                        minute: '2-digit',
-                      })}{' '}
-                      -{' '}
-                      {new Date(reservation.end_time).toLocaleTimeString([], {
-                        hour: '2-digit',
-                        minute: '2-digit',
-                      })}
+                      {reservation.formatted_time}
                     </td>
                     <td>
                       <Link to={`/update-reservation/${reservation.id}`}>
@@ -107,15 +103,7 @@ function Reservations({ courts, setCourts, setCurrentUser, currentUser }) {
                     <tr key={reservation.id}>
                       <td>{formatDate(reservation.date)}</td>
                       <td>
-                        {new Date(reservation.start_time).toLocaleTimeString([], {
-                          hour: '2-digit',
-                          minute: '2-digit',
-                        })}{' '}
-                        -{' '}
-                        {new Date(reservation.end_time).toLocaleTimeString([], {
-                          hour: '2-digit',
-                          minute: '2-digit',
-                        })}
+                        {reservation.formatted_time}
                       </td>
                     </tr>
                   ))}
