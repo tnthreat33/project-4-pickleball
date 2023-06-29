@@ -38,6 +38,7 @@ function NewReservationForm({ courts, onCreateReservation }) {
           });
         } else {
           r.json().then((err) => setErrors(err.errors));
+          console.log(error)
         }
       });
   }

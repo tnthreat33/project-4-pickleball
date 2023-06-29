@@ -32,6 +32,7 @@ function SignUpForm({ setCurrentUser }) {
         r.json().then((user) => setCurrentUser(user));
       } else {
         r.json().then((err) => setErrors(err.errors));
+        
       }
     });
   }

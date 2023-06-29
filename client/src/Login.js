@@ -18,14 +18,18 @@ function Login({ setCurrentUser }) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ email, password }),
-    }).then((r) => {
-      setIsLoading(false);
-      if (r.ok) {
-        r.json().then((user) => setCurrentUser(user));
-      } else {
-        r.json().then((err) => setErrors(err.errors));
-      }
-    });
+    })
+      .then((r) => {
+        setIsLoading(false);
+        if (r.ok) {
+          r.json().then((user) => setCurrentUser(user));
+        } else {
+          r.json().then((err) => {
+            setErrors(err.errors);
+            console.error("Login error:", errors);
+          });
+        }
+      })
   }
 
   function handleShowSignUpForm() {

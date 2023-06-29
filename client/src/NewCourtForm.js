@@ -5,7 +5,7 @@ function NewCourtForm({ addCourt }) {
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [price, setPrice] = useState('');
-  const [errors, setErrors] = useState([]);
+  
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -32,12 +32,10 @@ function NewCourtForm({ addCourt }) {
         setName('');
         setAddress('');
         setPrice('');
-        setErrors([]);
         addCourt(court);
       })
       .catch((error) => {
         console.error(error);
-        setErrors(['Error creating court']);
       });
   }
 
