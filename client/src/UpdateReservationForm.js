@@ -1,17 +1,22 @@
 import React, { useState } from 'react';
-import {  useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
-function UpdateReservationForm({ courts, currentUser,  handleUpdateReservation }) {
+function UpdateReservationForm({ courts, currentUser, handleUpdateReservation }) {
   const { reservationId } = useParams();
- const navigate = useNavigate();
+  const navigate = useNavigate();
 
+  const selectedReservation = currentUser.reservations.find(
+    (reservation) => reservation.id === Number(reservationId)
+  ) || {};
 
- const selectedReservation = currentUser.reservations.find(
-  (reservation) => reservation.id === Number(reservationId)
-);
+  const startTime = selectedReservation.start_time ? selectedReservation.start_time.slice(11, 16) : '';
+  const endTime = selectedReservation.end_time ? selectedReservation.end_time.slice(11, 16) : '';
 
-  const [reservation, setReservation] = useState(selectedReservation);
-
+  const [reservation, setReservation] = useState({
+    ...selectedReservation,
+    start_time: startTime,
+    end_time: endTime,
+  });
 
   function handleInputChange(event) {
     const { name, value } = event.target;
@@ -20,11 +25,10 @@ function UpdateReservationForm({ courts, currentUser,  handleUpdateReservation }
       [name]: value,
     }));
   }
-  
 
   function handleSubmit(event) {
     event.preventDefault();
-  
+
     fetch(`/reservations/${reservationId}`, {
       method: 'PATCH',
       headers: {
@@ -40,14 +44,13 @@ function UpdateReservationForm({ courts, currentUser,  handleUpdateReservation }
         }
       })
       .then((updatedReservation) => {
-        handleUpdateReservation(updatedReservation)
+        handleUpdateReservation(updatedReservation);
         navigate('/reservations');
       })
       .catch((error) => {
         console.log('Reservation update error:', error);
       });
   }
-  
 
   return (
     <div>
@@ -74,7 +77,7 @@ function UpdateReservationForm({ courts, currentUser,  handleUpdateReservation }
           type="date"
           id="date"
           name="date"
-          value={reservation.date}
+          value={reservation.date || ''}
           onChange={handleInputChange}
           required
         />
