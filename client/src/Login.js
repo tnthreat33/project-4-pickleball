@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import SignUpForm from "./SignUpForm";
 import './Login.css';
+import { useNavigate } from 'react-router-dom';
 
 function Login({ setCurrentUser }) {
   const [password, setPassword] = useState("");
@@ -8,6 +9,7 @@ function Login({ setCurrentUser }) {
   const [errors, setErrors] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showSignUpForm, setShowSignUpForm] = useState(false);
+  const navigate = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -22,14 +24,17 @@ function Login({ setCurrentUser }) {
       .then((r) => {
         setIsLoading(false);
         if (r.ok) {
-          r.json().then((user) => setCurrentUser(user));
+          r.json().then((user) => {
+            setCurrentUser(user);
+            navigate('/');
+          });
         } else {
           r.json().then((err) => {
             setErrors(err.errors);
             console.error("Login error:", errors);
           });
         }
-      })
+      });
   }
 
   function handleShowSignUpForm() {

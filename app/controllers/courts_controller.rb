@@ -8,7 +8,6 @@ end
 
 def create 
     court = Court.create(court_params)
-    court.reservations = []
     render json: court, status: :created
 end 
 

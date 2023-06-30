@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Routes, Route} from 'react-router-dom';
 import NavBar from './NavBar';
@@ -16,17 +17,14 @@ function App() {
   const [currentUser, setCurrentUser] = useState(null);
  
 
-  useEffect(() => {
-    // auto-login
-    fetch("/auth")
-      .then((r) => {
-        if (r.ok) {
-          r.json().then((user) => setCurrentUser(user));
-        }
-      })
-      .catch((error) => {
-        console.log("Auto-login error:", error);
-      });
+ 
+      useEffect(() => {
+        // auto-login
+        fetch("/auth").then((r) => {
+          if (r.ok) {
+            r.json().then((user) => setCurrentUser(user));
+          }
+        });
 
     fetch("/courts")
       .then((response) => response.json())
@@ -35,11 +33,16 @@ function App() {
         console.log("Court data fetch error:", error);
       });
   }, []);
+ 
+   if (!currentUser) return <Login setCurrentUser={setCurrentUser} />;
+   
+
+  
 
   function handleAddCourt(newCourt) {
     setCourts((courts) => [...courts, newCourt]);
   }
-
+  
   
   function handleAddReservation(newReservation) {
     const updatedCourts = courts.map((court) => {
@@ -52,16 +55,16 @@ function App() {
       return court;
     });
   setCourts(updatedCourts);
-
+  
   setCurrentUser((prevUser) => {
     return {
       ...prevUser,
       reservations: [...prevUser.reservations, newReservation],
     };
   });
-}
-
-function handleUpdateReservation(updatedReservation) {
+  }
+  
+  function handleUpdateReservation(updatedReservation) {
   const updatedCourts = courts.map((court) => {
     if (court.id === updatedReservation.court_id) {
       const updatedReservations = court.reservations.map((reservation) => {
@@ -70,7 +73,7 @@ function handleUpdateReservation(updatedReservation) {
         }
         return reservation;
       });
-
+  
       return {
         ...court,
         reservations: updatedReservations,
@@ -78,24 +81,21 @@ function handleUpdateReservation(updatedReservation) {
     }
     return court;
   });
-
+  
   setCourts(updatedCourts);
-
+  
   const updatedUserReservations = currentUser.reservations.map((reservation) => {
     if (reservation.id === updatedReservation.id) {
       return updatedReservation;
     }
     return reservation;
   });
-
+  
   setCurrentUser((prevUser) => ({
     ...prevUser,
     reservations: updatedUserReservations,
   }));
-}
-
-
- 
+  }
 
   function handleLogout() {
     fetch("/logout", {
@@ -109,40 +109,68 @@ function handleUpdateReservation(updatedReservation) {
       });
   }
 
-  if (!currentUser) {
-    return <Login setCurrentUser={setCurrentUser} />;
-  }
+
 
   return (
     <div className="App">
-      <NavBar onLogout={handleLogout} user = {currentUser}/>
+      <NavBar onLogout={handleLogout} user={currentUser} />
       <Routes>
-      <Route path="/" element={<Home courts={courts} />}/>
-       <Route exact path="/courts"
-         element={ <Courts courts={courts} addCourt={handleAddCourt} setCourts={setCourts} />}
+        <Route path="/" element={<Home courts={courts} />} />
+        <Route
+          path="/courts"
+          element={
+            <Courts
+              courts={courts}
+              addCourt={handleAddCourt}
+              setCourts={setCourts}
+            />
+          }
         />
-        <Route exact path="/new-court"
+        <Route
+          path="/new-court"
           element={<NewCourtForm addCourt={handleAddCourt} />}
         />
-        <Route exact path="/reservations"
-          element={<Reservations courts={courts} setCourts= {setCourts} setCurrentUser={setCurrentUser} currentUser={currentUser}/>}
+        <Route
+          path="/reservations"
+          element={
+            <Reservations
+              courts={courts}
+              setCourts={setCourts}
+              setCurrentUser={setCurrentUser}
+              currentUser={currentUser}
+            />
+          }
         />
-        <Route exact path="/new-reservation"
-          element={<NewReservationForm
-            onCreateReservation={handleAddReservation}
-            courts={courts}
-          />}
+        <Route
+          path="/new-reservation"
+          element={
+            <NewReservationForm
+              onCreateReservation={handleAddReservation}
+              courts={courts}
+            />
+          }
         />
-        <Route exact path="/update-reservation/:reservationId"
-          element={<UpdateReservationForm courts={courts} currentUser={currentUser}  handleUpdateReservation= {handleUpdateReservation}/>}
-          />
-        <Route exact path="/profile"
-          element={<UserProfile user={currentUser} courts={courts}/>}
-        /> 
+        <Route
+          path="/update-reservation/:reservationId"
+          element={
+            <UpdateReservationForm
+              courts={courts}
+              currentUser={currentUser}
+              handleUpdateReservation={handleUpdateReservation}
+            />
+          }
+        />
+        <Route
+          path="/profile"
+          element={<UserProfile user={currentUser} courts={courts} />}
+        />
       </Routes>
     </div>
   );
 }
 
 export default App;
+
+
+
 
