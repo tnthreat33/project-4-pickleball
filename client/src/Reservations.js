@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import { UserContext} from "./Context/user";
 import './Reservations.css';
 import { Link } from 'react-router-dom';
 
-function Reservations({ courts, setCourts, setCurrentUser, currentUser }) {
+function Reservations({ courts, setCourts}) {
+  const { currentUser, setCurrentUser } = useContext(UserContext);
 
   function handleDelete(reservationId) {
     fetch(`/reservations/${reservationId}`, {

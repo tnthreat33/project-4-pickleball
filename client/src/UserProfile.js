@@ -1,9 +1,10 @@
-import React from "react";
+import React, {useContext} from 'react';
+import { UserContext} from "./Context/user";
 import "./UserProfile.css";
 import { Link } from 'react-router-dom';
 
-function UserProfile({ user, courts }) {
-  
+function UserProfile({ courts }) {
+  const { currentUser} = useContext(UserContext);
 
   const getCourtName = (courtId) => {
     const court = courts.find((court) => court.id === courtId);
@@ -12,16 +13,16 @@ function UserProfile({ user, courts }) {
 
   return (
     <div className="profile-container">
-      <h1> {user.name} Profile Page</h1>
-      <h3>{user.email}</h3>
+      <h1> {currentUser.name} Profile Page</h1>
+      <h3>{currentUser.email}</h3>
 
       <h2>Your Reservations:</h2>
       <Link to={'/reservations'}>
                         <button>Edit Reservations</button>
                       </Link>
-      {user.reservations.length > 0 ? (
+      {currentUser.reservations.length > 0 ? (
         <div className="reservation-container">
-          {user.reservations.map((reservation) => (
+          {currentUser.reservations.map((reservation) => (
             <div className="reservation-card" key={reservation.id}>
               <p>Date: {reservation.date}</p>
               <p>Court: {getCourtName(reservation.court_id)}</p>

@@ -1,5 +1,6 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { UserContext} from "./Context/user";
 import { Routes, Route} from 'react-router-dom';
 import NavBar from './NavBar';
 import './App.css';
@@ -14,7 +15,8 @@ import UpdateReservationForm from './UpdateReservationForm';
 
 function App() {
   const [courts, setCourts] = useState([]);
-  const [currentUser, setCurrentUser] = useState(null);
+  //const [currentUser, setCurrentUser] = useState(null);
+  const { currentUser, setCurrentUser } = useContext(UserContext);
  
 
  
@@ -32,9 +34,9 @@ function App() {
       .catch((error) => {
         console.log("Court data fetch error:", error);
       });
-  }, []);
+  }, [setCurrentUser]);
  
-   if (!currentUser) return <Login setCurrentUser={setCurrentUser} />;
+   if (!currentUser) return <Login  />;
    
 
   
@@ -113,7 +115,8 @@ function App() {
 
   return (
     <div className="App">
-      <NavBar onLogout={handleLogout} user={currentUser} />
+      
+      <NavBar onLogout={handleLogout}  />
       <Routes>
         <Route path="/" element={<Home courts={courts} />} />
         <Route
@@ -136,8 +139,7 @@ function App() {
             <Reservations
               courts={courts}
               setCourts={setCourts}
-              setCurrentUser={setCurrentUser}
-              currentUser={currentUser}
+              
             />
           }
         />
@@ -155,16 +157,16 @@ function App() {
           element={
             <UpdateReservationForm
               courts={courts}
-              currentUser={currentUser}
               handleUpdateReservation={handleUpdateReservation}
             />
           }
         />
         <Route
           path="/profile"
-          element={<UserProfile user={currentUser} courts={courts} />}
+          element={<UserProfile courts={courts} />}
         />
       </Routes>
+      
     </div>
   );
 }

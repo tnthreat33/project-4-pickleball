@@ -1,8 +1,11 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import { UserContext} from "./Context/user";
 import { NavLink } from 'react-router-dom';
 import './NavBar.css';
 
-function NavBar({ onLogout, user }) {
+function NavBar({ onLogout }) {
+  const { currentUser} = useContext(UserContext);
+
   function handleLogout() {
     fetch("/logout", {
       method: "DELETE",
@@ -12,7 +15,7 @@ function NavBar({ onLogout, user }) {
   return (
     <div className="navbar">
       <header>
-        Welcome, {user.name} <button onClick={handleLogout}>Logout</button> </header>
+        Welcome, {currentUser.name} <button onClick={handleLogout}>Logout</button> </header>
         
       
       <nav>

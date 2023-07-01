@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, {useContext, useState} from 'react';
+import { UserContext} from "./Context/user";
 import { useParams, useNavigate } from 'react-router-dom';
 
-function UpdateReservationForm({ courts, currentUser, handleUpdateReservation }) {
+function UpdateReservationForm({ courts, handleUpdateReservation }) {
   const { reservationId } = useParams();
   const navigate = useNavigate();
+  const { currentUser} = useContext(UserContext);
 
   const selectedReservation = currentUser.reservations.find(
     (reservation) => reservation.id === Number(reservationId)
