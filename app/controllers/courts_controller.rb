@@ -1,10 +1,18 @@
 class CourtsController < ApplicationController
     skip_before_action :authorized, only: :index
     
-def index 
-    courts = Court.all
-    render json: courts 
-end
+    def index
+        if params[:user_id]
+          # User-specific courts
+          user = User.find(params[:user_id])
+          courts = user.courts
+        else
+          # All courts
+          courts = Court.all
+        end
+    
+        render json: courts
+      end
 
 def create 
     court = Court.create(court_params)

@@ -15,24 +15,34 @@ import UpdateReservationForm from './UpdateReservationForm';
 
 function App() {
   const [courts, setCourts] = useState([]);
-  //const [currentUser, setCurrentUser] = useState(null);
   const { currentUser, setCurrentUser } = useContext(UserContext);
- 
+console.log(currentUser)
 
- 
-      useEffect(() => {
-        // auto-login
-        fetch("/auth").then((r) => {
-          if (r.ok) {
-            r.json().then((user) => setCurrentUser(user));
-          }
-        });
-
-    fetch("/courts")
-      .then((response) => response.json())
-      .then((data) => setCourts(data))
+  useEffect(() => {
+    // auto-login
+    fetch("/auth")
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error("Authentication failed");
+        }
+      })
+      .then((user) => {
+        setCurrentUser(user);
+        return user;
+      })
+      .then((user) => {
+        fetch("/courts")
+          .then((response) => response.json())
+          .then((data) => setCourts(data))
+          .catch((error) => {
+            console.log("Court data fetch error:", error);
+          });
+  
+      })
       .catch((error) => {
-        console.log("Court data fetch error:", error);
+        console.log("Authentication error:", error);
       });
   }, [setCurrentUser]);
  
@@ -47,6 +57,7 @@ function App() {
   
   
   function handleAddReservation(newReservation) {
+    
     const updatedCourts = courts.map((court) => {
       if (court.id === newReservation.court_id) {
         return {
@@ -58,15 +69,19 @@ function App() {
     });
   setCourts(updatedCourts);
   
+  const courtToAdd = courts.find((court) => court.id === newReservation.court_id);
+
   setCurrentUser((prevUser) => {
-    return {
-      ...prevUser,
-      reservations: [...prevUser.reservations, newReservation],
-    };
-  });
-  }
+      return {
+        ...prevUser,
+        reservations: [...prevUser.reservations, newReservation],
+        courts: [...prevUser.courts, courtToAdd],
+      };
+    });
+}
   
   function handleUpdateReservation(updatedReservation) {
+    console.log(updatedReservation)
   const updatedCourts = courts.map((court) => {
     if (court.id === updatedReservation.court_id) {
       const updatedReservations = court.reservations.map((reservation) => {
@@ -139,6 +154,7 @@ function App() {
             <Reservations
               courts={courts}
               setCourts={setCourts}
+             // userCourts = {userCourts}
               
             />
           }
