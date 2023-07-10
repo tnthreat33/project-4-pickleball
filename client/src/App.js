@@ -15,7 +15,6 @@ import UpdateReservationForm from './UpdateReservationForm';
 
 function App() {
   const [courts, setCourts] = useState([]);
-  //const [currentUser, setCurrentUser] = useState(null);
   const { currentUser, setCurrentUser } = useContext(UserContext);
 
  
@@ -78,24 +77,24 @@ function App() {
   }
   
   function handleUpdateReservation(updatedReservation) {
-  const updatedCourts = courts.map((court) => {
-    if (court.id === updatedReservation.court_id) {
-      const updatedReservations = court.reservations.map((reservation) => {
-        if (reservation.id === updatedReservation.id) {
-          return updatedReservation;
-        }
-        return reservation;
-      });
+    const updatedCourts = courts.map((court) => {
+      if (court.id === updatedReservation.court_id) {
+        const updatedReservations = court.reservations.map((reservation) => {
+          if (reservation.id === updatedReservation.id) {
+            return updatedReservation;
+          }
+          return reservation;
+        });
   
-      return {
-        ...court,
-        reservations: updatedReservations,
-      };
-    }
-    return court;
-  });
+        return {
+          ...court,
+          reservations: updatedReservations,
+        };
+      }
+      return court;
+    });
   
-  setCourts(updatedCourts);
+    setCourts(updatedCourts);
   
   const updatedUserReservations = currentUser.reservations.map((reservation) => {
     if (reservation.id === updatedReservation.id) {
@@ -174,7 +173,7 @@ function App() {
         />
         <Route
           path="/profile"
-          element={<UserProfile courts={courts} />}
+          element={<UserProfile />}
         />
       </Routes>
       

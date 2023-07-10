@@ -3,13 +3,9 @@ import { UserContext} from "./Context/user";
 import "./UserProfile.css";
 import { Link } from 'react-router-dom';
 
-function UserProfile({ courts }) {
+function UserProfile() {
   const { currentUser} = useContext(UserContext);
 
-  const getCourtName = (courtId) => {
-    const court = courts.find((court) => court.id === courtId);
-    return court ? court.name : "Unknown Court";
-  };
 
   return (
     <div className="profile-container">
@@ -25,7 +21,7 @@ function UserProfile({ courts }) {
           {currentUser.reservations.map((reservation) => (
             <div className="reservation-card" key={reservation.id}>
               <p>Date: {reservation.date}</p>
-              <p>Court: {getCourtName(reservation.court_id)}</p>
+              <p>Court: {reservation.court_name}</p>
               <p>
                 Start Time:{" "}
                 {new Date(reservation.start_time).toLocaleTimeString([], {

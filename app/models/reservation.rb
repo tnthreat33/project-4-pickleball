@@ -5,6 +5,10 @@ class Reservation < ApplicationRecord
   validate :date_must_be_after_today
   validate :end_time_must_be_after_start_time
 
+  def court_name
+    self.court.name
+  end 
+
   private
 
   def date_must_be_after_today

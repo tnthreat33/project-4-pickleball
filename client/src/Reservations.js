@@ -66,11 +66,10 @@ function Reservations({ courts, setCourts}) {
           <table>
             <tbody>
               {currentUser.reservations.map((reservation) => {
-                const court = courts.find((court) => court.id === reservation.court_id);
                 return (
                   <tr key={reservation.id}>
                     <td>
-                      <h4>{court ? court.name : 'Unknown Court'} -</h4>
+                      <h4>{reservation.court_name} -</h4>
                     </td>
                     <td>{formatDate(reservation.date)}</td>
                     <td>
