@@ -5,7 +5,7 @@ import './Courts.css';
 function Courts({ courts }) {
   const [selectedCourt, setSelectedCourt] = useState(null);
   const [showReservations, setShowReservations] = useState(false);
-  console.log(courts)
+ 
 
   const handleReservationClick = (court) => {
     setSelectedCourt(court);
