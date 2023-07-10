@@ -17,7 +17,6 @@ function App() {
   const [courts, setCourts] = useState([]);
   //const [currentUser, setCurrentUser] = useState(null);
   const { currentUser, setCurrentUser } = useContext(UserContext);
- console.log(currentUser)
 
  
  useEffect(() => {
