@@ -17,11 +17,11 @@
     )
   end
   
-  # Create courts
   10.times do |i|
     Court.create(
       name: "Court #{i+1}",
-      address: "Address #{i+1}"
+      address: "Address #{i+1}",
+      price: rand(0..250)
     )
   end
   
