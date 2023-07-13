@@ -3,7 +3,7 @@ Rails.application.routes.draw do
  
 
   resources :courts, only: [:index, :create, :destroy]
-  resources :reservations, only: [:create, :destroy, :update] 
+  resources :reservations
   resources :users, only: [:create, :show]
 
   post "/login", to: "sessions#create"
