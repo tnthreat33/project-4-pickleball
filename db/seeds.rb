@@ -11,8 +11,8 @@
 # Create users
 10.times do |i|
     User.create(
-      name: "User #{i+1}",
-      email: "user#{i+1}@example.com",
+      name: Faker::Name.name,
+      email: Faker::Internet.email,
       password_digest: 'password123'
     )
   end
@@ -21,7 +21,8 @@
   10.times do |i|
     Court.create(
       name: "Court #{i+1}",
-      address: "Address #{i+1}"
+      address: Faker::Address.street_address,
+      price: rand(0..50)
     )
   end
   

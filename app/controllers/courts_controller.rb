@@ -8,7 +8,11 @@ end
 
 def create 
     court = Court.create(court_params)
+    if court.valid?
     render json: court, status: :created
+    else
+        render json: {error: court.errors}, status: :unprocessable_entity
+    end
 end 
 
 def destroy 

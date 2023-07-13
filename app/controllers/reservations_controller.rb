@@ -1,5 +1,11 @@
 class ReservationsController < ApplicationController
   before_action :find_reservation, only: [:destroy, :update]
+
+  def index
+    reservations = Reservation.all
+    render json: reservations
+  end 
+
   
   def create
     reservation = Reservation.new(reservation_params)
@@ -11,6 +17,7 @@ class ReservationsController < ApplicationController
       render json: { error: reservation.errors.full_messages }, status: :unprocessable_entity
     end
   end
+  
 
   def destroy 
     if @reservation

@@ -18,33 +18,33 @@ function App() {
   const { currentUser, setCurrentUser } = useContext(UserContext);
 
  
- useEffect(() => {
-  // auto-login
-  fetch("/auth")
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error("Authentication failed");
-      }
-    })
-    .then((user) => {
-      setCurrentUser(user);
-      return user;
-    })
-    .then((user) => {
-      fetch("/courts")
-        .then((response) => response.json())
-        .then((data) => setCourts(data))
-        .catch((error) => {
-          console.log("Court data fetch error:", error);
-        });
-
-    })
-    .catch((error) => {
-      console.log("Authentication error:", error);
-    });
-}, [setCurrentUser]);
+  useEffect(() => {
+    // auto-login
+    fetch("/auth")
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error("Authentication failed");
+        }
+      })
+      .then((user) => {
+        setCurrentUser(user);
+        return user;
+      })
+      .catch((error) => {
+        console.log("Authentication error:", error);
+      });
+  
+    // Fetch courts
+    fetch("/courts")
+      .then((response) => response.json())
+      .then((data) => setCourts(data))
+      .catch((error) => {
+        console.log("Court data fetch error:", error);
+      });
+  }, [setCurrentUser]);
+  
 
  if (!currentUser) return <Login  />;
    
