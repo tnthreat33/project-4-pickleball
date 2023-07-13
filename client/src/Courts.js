@@ -26,7 +26,7 @@ function Courts({ courts }) {
             <tr>
               <th>Court</th>
               <th>Location</th>
-              <th>Price</th>
+              <th>Price Per Hour</th>
               <th>See Reservations</th>
             </tr>
           </thead>
