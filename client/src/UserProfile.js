@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 function UserProfile() {
   const { currentUser} = useContext(UserContext);
 
-
   return (
     <div className="profile-container">
       <h1> {currentUser.name} Profile Page</h1>
@@ -22,18 +21,7 @@ function UserProfile() {
             <div className="reservation-card" key={reservation.id}>
               <p>Date: {reservation.date}</p>
               <p>Court: {reservation.court_name}</p>
-              <p>
-                Start Time:{" "}
-                {new Date(reservation.start_time).toLocaleTimeString([], {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}{" "}
-                - End Time:{" "}
-                {new Date(reservation.end_time).toLocaleTimeString([], {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
-              </p>
+              <p> Time: {reservation.formatted_time}</p>
             </div>
           ))}
         </div>

@@ -12,7 +12,7 @@ function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const [showSignUpForm, setShowSignUpForm] = useState(false);
   const navigate = useNavigate();
-  console.log(error);
+ 
 
   function handleSubmit(e) {
     e.preventDefault();
