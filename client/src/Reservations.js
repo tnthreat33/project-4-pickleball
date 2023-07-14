@@ -1,10 +1,11 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import { UserContext} from "./Context/user";
 import './Reservations.css';
 import { Link } from 'react-router-dom';
 
 function Reservations({ courts, setCourts}) {
   const { currentUser, setCurrentUser } = useContext(UserContext);
+  const [error, setErrors] = useState([])
 
   function handleDelete(reservationId) {
     fetch(`/reservations/${reservationId}`, {
@@ -34,7 +35,7 @@ function Reservations({ courts, setCourts}) {
           };
           setCurrentUser(updatedUser);
         } else {
-          console.log('Error deleting reservation:', reservationId);
+          response.json().then((err) => {setErrors(err.error)})
         }
       })
       .catch((error) => {
@@ -106,6 +107,7 @@ function Reservations({ courts, setCourts}) {
                       <td>
                         {reservation.formatted_time}
                       </td>
+                      
                     </tr>
                   ))}
                 </tbody>
