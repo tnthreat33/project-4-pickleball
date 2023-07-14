@@ -8,6 +8,7 @@ function SignUpForm({ setCurrentUser }) {
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  console.log(errors)
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -75,7 +76,14 @@ function SignUpForm({ setCurrentUser }) {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-      
+      {errors && (
+  <div className="error-container">
+    {errors.map((error, index) => (
+      <p key={index} className="error-message">{error}</p>
+    ))}
+  </div>
+)}
+
         <button type="submit">{isLoading ? "Loading..." : "Sign Up"}</button>
       
     </form>
