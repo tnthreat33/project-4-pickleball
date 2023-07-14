@@ -18,9 +18,9 @@
   end
   
   # Create courts
-  10.times do |i|
+  50.times do |i|
     Court.create(
-      name: "Court #{i+1}",
+      name: Faker::Company.name + ' Courts',
       address: Faker::Address.street_address,
       price: rand(0..50)
     )
