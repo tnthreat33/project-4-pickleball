@@ -6,6 +6,7 @@ function UpdateReservationForm({ courts, handleUpdateReservation }) {
   const { reservationId } = useParams();
   const navigate = useNavigate();
   const { currentUser} = useContext(UserContext);
+  const [error, setErrors] = useState([]);
 
   const selectedReservation = currentUser.reservations.find(
     (reservation) => reservation.id === Number(reservationId)
@@ -42,7 +43,7 @@ function UpdateReservationForm({ courts, handleUpdateReservation }) {
         if (response.ok) {
           return response.json();
         } else {
-          throw new Error('Failed to update reservation');
+          response.json().then((err) => {setErrors(err.error)})
         }
       })
       .then((updatedReservation) => {
@@ -103,6 +104,14 @@ function UpdateReservationForm({ courts, handleUpdateReservation }) {
           onChange={handleInputChange}
           required
         />
+
+        {error && (
+            <div className="error-container">
+              {Object.values(error).map((errorMessage, index) => (
+                <p key={index} className="error-message">{errorMessage}</p>
+              ))}
+            </div>
+          )}
 
         <button type="submit">Update Reservation</button>
       </form>

@@ -27,7 +27,7 @@ function NewCourtForm({ addCourt }) {
           return response.json();
         } else {
           response.json().then((data) => {
-            setError(data); // 
+            setError(data.error); // 
           });
         }
       })
