@@ -15,7 +15,11 @@ class UsersController < ApplicationController
 
     def show
         current_user = User.find(session[:user_id])
+       if current_user
         render json: current_user
+      else
+        render json: {errors: {login: "Invalid Email or Password"}}, status: :unauthorized
+    end
     end 
 
     private

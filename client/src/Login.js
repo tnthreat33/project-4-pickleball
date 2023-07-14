@@ -59,11 +59,6 @@ function Login() {
         <h3>Login to see the courts and make your reservations</h3>
       </div>
       <div className="login-container">
-        {error && (
-          <div className="error-container">
-            <p className="error-message">{error}</p>
-          </div>
-        )}
         <form onSubmit={handleSubmit}>
           <label htmlFor="email">Email</label>
           <input
@@ -82,6 +77,13 @@ function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
 
+            {error && (
+              <div className="error-container">
+                {error.map((error, index) => (
+                  <p key={index} className="error-message">{error}</p>
+                ))}
+              </div>
+            )}
           <button variant="fill" color="primary" type="submit">
             {isLoading ? 'Loading...' : 'Login'}
           </button>

@@ -15,6 +15,7 @@ import UpdateReservationForm from './UpdateReservationForm';
 
 function App() {
   const [courts, setCourts] = useState([]);
+  const [error, setError] =useState('')
   const { currentUser, setCurrentUser } = useContext(UserContext);
   
 
@@ -26,7 +27,9 @@ function App() {
         if (response.ok) {
           return response.json();
         } else {
-          throw new Error("Authentication failed");
+          response.json().then((data) => {
+            setError(data.errors.login); // Access the specific error message
+          });
         }
       })
       .then((user) => {

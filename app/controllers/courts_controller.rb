@@ -11,7 +11,7 @@ def create
     if court.valid?
     render json: court, status: :created
     else
-        render json: {error: court.errors}, status: :unprocessable_entity
+        render json: {error: court.errors.full_messages}, status: :unprocessable_entity
     end
 end 
 
