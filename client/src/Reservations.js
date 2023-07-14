@@ -82,6 +82,11 @@ function Reservations({ courts, setCourts}) {
                       </Link>
                     </td>
                     <td>
+                    {error && (
+                          <div className="error-container">
+                            {error}
+                          </div>
+                        )}
                       <button onClick={() => handleDelete(reservation.id)}>Delete</button>
                     </td>
                   </tr>
