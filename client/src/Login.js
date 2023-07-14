@@ -33,7 +33,7 @@ function Login() {
           });
         } else {
           response.json().then((data) => {
-            setError(data.errors.login); // Access the specific error message
+            setError(data.errors.login); 
           });
         }
       })
@@ -79,9 +79,8 @@ function Login() {
 
             {error && (
               <div className="error-container">
-                {error.map((error, index) => (
-                  <p key={index} className="error-message">{error}</p>
-                ))}
+                <p>{error}</p>
+               
               </div>
             )}
           <button variant="fill" color="primary" type="submit">
