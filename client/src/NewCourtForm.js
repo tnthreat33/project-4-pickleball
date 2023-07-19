@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './NewCourtForm.css';
 
 function NewCourtForm({ addCourt }) {
@@ -6,6 +7,8 @@ function NewCourtForm({ addCourt }) {
   const [address, setAddress] = useState('');
   const [price, setPrice] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
+ 
  
 
   function handleSubmit(e) {
@@ -27,20 +30,26 @@ function NewCourtForm({ addCourt }) {
           return response.json();
         } else {
           response.json().then((data) => {
-            setError(data.error); // 
+            setError(data.error);
           });
+          return null; // Return null to indicate the court addition failed
         }
       })
       .then((court) => {
-        setName('');
-        setAddress('');
-        setPrice('');
-        addCourt(court);
+        if (court) {
+          setName('');
+          setAddress('');
+          setPrice('');
+          addCourt(court);
+          navigate('/courts');
+        }
       })
       .catch((error) => {
         console.error(error);
       });
   }
+  
+  
 
   return (
     <div className="form-container">

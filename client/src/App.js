@@ -55,9 +55,14 @@ function App() {
 
   
 
-  function handleAddCourt(newCourt) {
+ function handleAddCourt(newCourt) {
+  if (newCourt && newCourt.id) {
     setCourts((courts) => [...courts, newCourt]);
+  } else {
+    console.error("Failed to add new court:", newCourt);
   }
+}
+
   
   
   function handleAddReservation(newReservation) {
@@ -129,6 +134,12 @@ function App() {
 
   return (
     <div className="App">
+        {error && (
+              <div className="error-container">
+                <p>{error}</p>
+               
+              </div>
+            )}
       
       <NavBar onLogout={handleLogout}  />
       <Routes>
@@ -137,7 +148,7 @@ function App() {
           path="/courts"
           element={
             <Courts
-              courts={courts}
+              courts={courts} 
               addCourt={handleAddCourt}
               setCourts={setCourts}
             />

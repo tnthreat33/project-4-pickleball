@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Login from "./Login";
 import './Signup.css'
 
 function SignUpForm({ setCurrentUser }) {
@@ -8,7 +9,8 @@ function SignUpForm({ setCurrentUser }) {
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  console.log(errors)
+  const [showLoginForm, setLoginForm] = useState(false);
+  
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -36,6 +38,14 @@ function SignUpForm({ setCurrentUser }) {
         
       }
     });
+  }
+
+  function handleShowLoginForm() {
+    setLoginForm(true);
+  }
+
+  if (showLoginForm) {
+    return <Login setCurrentUser={setCurrentUser} />;
   }
 
   return (
@@ -85,9 +95,10 @@ function SignUpForm({ setCurrentUser }) {
 )}
 
         <button type="submit">{isLoading ? "Loading..." : "Sign Up"}</button>
+        <button onClick={handleShowLoginForm}>Login</button>
       
     </form>
-    </div>
+   </div>
   );
 }
 
