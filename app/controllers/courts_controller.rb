@@ -1,5 +1,5 @@
 class CourtsController < ApplicationController
-    skip_before_action :authorized, only: :index
+    skip_before_action :authorized, only: :index 
     
 def index 
     courts = Court.all

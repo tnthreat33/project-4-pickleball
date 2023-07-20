@@ -16,7 +16,7 @@ class Reservation < ApplicationRecord
   private
 
   def date_must_be_after_today
-    errors.add(:date, "must be after today's date") if date.present? && date <= Date.today
+    errors.add(:date, "must be after today's date") if date.present? && date < Date.today
   end
 
   def end_time_must_be_after_start_time
