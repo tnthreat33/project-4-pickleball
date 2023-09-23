@@ -2,6 +2,8 @@
 
 This is a web application that allows users to reserve pickle ball courts and add their own courts for others to use. The frontend of the application is built using React, while the backend is developed with Ruby on Rails. The application utilizes a RESTful API to handle user authentication, court management, and reservation functionality.
 
+Demo: https://youtu.be/5eWtgUiP_Cw
+
 ## Features
 
 - User authentication: Users can create accounts, log in, and log out of the application.

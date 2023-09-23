@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   get "/auth", to: "users#show"
   delete "/logout", to: "sessions#destroy"
 
+  get "/court_reservations/:n", to: "courts#court_reservations"
+
   
    # Leave this here to help deploy your app later!
    get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }

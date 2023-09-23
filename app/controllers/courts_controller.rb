@@ -1,5 +1,15 @@
 class CourtsController < ApplicationController
-    skip_before_action :authorized, only: :index 
+    skip_before_action :authorized, only: [:index, :court_reservations]
+
+    def court_reservations
+        number_of_courts = params[:n].to_i
+        courts = Court.all.select {|c| c.reservations.count >= number_of_courts  }
+        render json: courts
+    end 
+#Model.all.select { |m| m.field == value }
+    #param of a number
+    #finding all the courts that have that many or reservations
+    #return courts that fit that criteria 
     
 def index 
     courts = Court.all
