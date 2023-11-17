@@ -45,7 +45,7 @@ To run the application locally, follow these steps:
 - **Reservations**: Displays the user's reservations, all reservations and allows them to manage their reservations.
 - **NewReservationForm**: Allows users to create a new reservation.
 - **Login**: Handles user authentication, allowing users to log in to the application.
-- **NewCourtForm**: Allows users to create a new court.
+- **NewCourtForm**: Allows users to create a new court..
 - **UserProfile**: Displays the user's profile information, including their reservations.
 - **UpdateReservationForm**: Allows users to update an existing reservation, including changing the court or time slot.
 
