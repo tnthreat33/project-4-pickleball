@@ -2,8 +2,12 @@ class Reservation < ApplicationRecord
   belongs_to :user
   belongs_to :court
 
+
   validate :date_must_be_after_today
   validate :end_time_must_be_after_start_time
+  validates :date, presence: true
+  validates :start_time, presence: true
+  validates :end_time, presence: true 
 
   def court_name
     self.court.name
@@ -12,7 +16,7 @@ class Reservation < ApplicationRecord
   private
 
   def date_must_be_after_today
-    errors.add(:date, "must be after today's date") if date.present? && date <= Date.today
+    errors.add(:date, "must be after today's date") if date.present? && date < Date.today
   end
 
   def end_time_must_be_after_start_time

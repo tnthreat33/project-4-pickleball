@@ -15,45 +15,54 @@ import UpdateReservationForm from './UpdateReservationForm';
 
 function App() {
   const [courts, setCourts] = useState([]);
+  const [error, setError] =useState('')
   const { currentUser, setCurrentUser } = useContext(UserContext);
+  
 
  
- useEffect(() => {
-  // auto-login
-  fetch("/auth")
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error("Authentication failed");
-      }
-    })
-    .then((user) => {
-      setCurrentUser(user);
-      return user;
-    })
-    .then((user) => {
-      fetch("/courts")
-        .then((response) => response.json())
-        .then((data) => setCourts(data))
-        .catch((error) => {
-          console.log("Court data fetch error:", error);
-        });
-
-    })
-    .catch((error) => {
-      console.log("Authentication error:", error);
-    });
-}, [setCurrentUser]);
+  useEffect(() => {
+    // auto-login
+    fetch("/auth")
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          response.json().then((data) => {
+            setError(data.errors.login); // Access the specific error message
+          });
+        }
+      })
+      .then((user) => {
+        setCurrentUser(user);
+        return user;
+      })
+      .catch((error) => {
+        console.log("Authentication error:", error);
+      });
+  
+    // Fetch courts
+    fetch("/courts")
+      .then((response) => response.json())
+      .then((data) => setCourts(data))
+      .catch((error) => {
+        console.log("Court data fetch error:", error);
+      });
+  }, [setCurrentUser]);
+  
 
  if (!currentUser) return <Login  />;
    
 
   
 
-  function handleAddCourt(newCourt) {
+ function handleAddCourt(newCourt) {
+  if (newCourt && newCourt.id) {
     setCourts((courts) => [...courts, newCourt]);
+  } else {
+    console.error("Failed to add new court:", newCourt);
   }
+}
+
   
   
   function handleAddReservation(newReservation) {
@@ -125,6 +134,12 @@ function App() {
 
   return (
     <div className="App">
+        {error && (
+              <div className="error-container">
+                <p>{error}</p>
+               
+              </div>
+            )}
       
       <NavBar onLogout={handleLogout}  />
       <Routes>
@@ -133,7 +148,7 @@ function App() {
           path="/courts"
           element={
             <Courts
-              courts={courts}
+              courts={courts} 
               addCourt={handleAddCourt}
               setCourts={setCourts}
             />

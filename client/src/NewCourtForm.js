@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './NewCourtForm.css';
 
 function NewCourtForm({ addCourt }) {
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [price, setPrice] = useState('');
-  
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+ 
+ 
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -25,19 +29,27 @@ function NewCourtForm({ addCourt }) {
         if (response.ok) {
           return response.json();
         } else {
-          throw new Error('Error creating court');
+          response.json().then((data) => {
+            setError(data.error);
+          });
+          return null; // Return null to indicate the court addition failed
         }
       })
       .then((court) => {
-        setName('');
-        setAddress('');
-        setPrice('');
-        addCourt(court);
+        if (court) {
+          setName('');
+          setAddress('');
+          setPrice('');
+          addCourt(court);
+          navigate('/courts');
+        }
       })
       .catch((error) => {
         console.error(error);
       });
   }
+  
+  
 
   return (
     <div className="form-container">
@@ -71,6 +83,15 @@ function NewCourtForm({ addCourt }) {
             value={price}
             onChange={(e) => setPrice(e.target.value)}
           />
+              
+          {error && (
+            <div className="error-container">
+              {Object.values(error).map((errorMessage, index) => (
+                <p key={index} className="error-message">{errorMessage}</p>
+              ))}
+            </div>
+          )}
+
 
           <button type="submit">Create</button>
         </form>

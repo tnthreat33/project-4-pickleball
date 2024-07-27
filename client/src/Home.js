@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import './Home.css';
 
 function Home({ courts }) {
+  console.log(courts)
   return (
     <div className="home">
       <h1>Pickleball Court Central</h1>
@@ -14,7 +15,7 @@ function Home({ courts }) {
             <tr>
               <th>Court</th>
               <th>Location</th>
-              <th>Price</th>
+              <th>Price Per Hour</th>
             </tr>
           </thead>
           <tbody>

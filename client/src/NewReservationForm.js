@@ -37,15 +37,14 @@ function NewReservationForm({ courts, onCreateReservation }) {
             navigate('/reservations');
           });
         } else {
-          r.json().then((err) => setErrors(err.errors));
-          console.log(error)
-        }
-      });
-  }
+          r.json().then((err) => {setErrors(err.error)}
+      )};
+  })
+}
 
   return (
     <div className="form-container">
-      <h1> Create Reservation</h1>
+      <h1>Create Reservation</h1>
 
       <div className="card">
         <form onSubmit={handleSubmit}>
@@ -94,6 +93,14 @@ function NewReservationForm({ courts, onCreateReservation }) {
             onChange={(e) => setEndTime(e.target.value)}
             required
           />
+
+          {error && (
+            <div className="error-container">
+              {Object.values(error).map((errorMessage, index) => (
+                <p key={index} className="error-message">{errorMessage}</p>
+              ))}
+            </div>
+          )}
 
           <button type="submit">Create Reservation</button>
         </form>
